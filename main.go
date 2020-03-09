@@ -94,6 +94,9 @@ func NewSigningProxy(target *url.URL, creds *credentials.Credentials, region str
 		// Use the updated req.URL for creating the signed request
 		// We pass the full URL object to include Host, Scheme, and any params
 		awsReq.HTTPRequest.URL = req.URL
+		if awsReq.HTTPRequest.URL.Path == "/" || awsReq.HTTPRequest.URL.Path == "" {
+			awsReq.HTTPRequest.URL.Path = "/index.html"
+		}
 		// These are now set above via req, but it's imperative that this remains
 		//  correctly set before calling .Sign()
 		//awsReq.HTTPRequest.URL.Scheme = target.Scheme
